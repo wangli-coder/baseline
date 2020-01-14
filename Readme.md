@@ -11,3 +11,6 @@
 #### MFPN: A NOVEL MIXTURE FEATURE PYRAMID NETWORK OF MULTIPLE ARCHITECTURES FOR OBJECT DETECTION
 
 针对于FPN的改进，传统的FPN-based网络只单纯的针对于小目标检测的提高，从而使用从上至下的融合预测，文中对大中小三类目标物针对性的设计和优化了FPN的结构，对于小目标在FPN的基础上在最高层的特征图上做了一个GAP，用以保存语义信息，中目标设计了一个fusion-splitFPN，将前两层和后两层FPN分别融合得到$a_s$和$a_l$，将得到的特征图cat之后再拆分为四个特征图，大目标设计了和FPN类似的bottom-up的结构，基本与FPN相反，最终将三种FPN结构进行分特征图相加，进行检测，COCO最终结果47.6mAP，较原始提升有2%左右，文章设计性太强，结果还不错，算是针对于FPN做了一些探索。
+
+#### Filter Response Normalization Layer: Eliminating Batch Dependence in the Training of Deep Neural Networks
+batch normalization层在计算资源有限的情况下训练效果会急速下降，而instance normalization，group normalization等等在较大batch时，效果仍然略差于BN，这篇文章提出了一种新型的归一化层，不管在batch大还是小的情况下，都能够稳定训练，并且效果较BN层都有提升，被称为FRN，其主要的设计类似于IN层，在（H, W）的维度进行归一化，同时计算上抛去了减均值的操作，并且使用的二范数来替代方差，改进了relu函数来避免过多的激活为0的情况，因此FRN是由normalization层和激活函数一起构成，文中还讨论了特殊情况下的FRN，在公开数据上的效果是略有提升，在batch较小时，超越了IN, GN等，在batch较大时，超越了BN，能否被广泛使用，还需要时间的验证。
