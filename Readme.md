@@ -14,3 +14,7 @@
 
 #### Filter Response Normalization Layer: Eliminating Batch Dependence in the Training of Deep Neural Networks
 batch normalization层在计算资源有限的情况下训练效果会急速下降，而instance normalization，group normalization等等在较大batch时，效果仍然略差于BN，这篇文章提出了一种新型的归一化层，不管在batch大还是小的情况下，都能够稳定训练，并且效果较BN层都有提升，被称为FRN，其主要的设计类似于IN层，在（H, W）的维度进行归一化，同时计算上抛去了减均值的操作，并且使用的二范数来替代方差，改进了relu函数来避免过多的激活为0的情况，因此FRN是由normalization层和激活函数一起构成，文中还讨论了特殊情况下的FRN，在公开数据上的效果是略有提升，在batch较小时，超越了IN, GN等，在batch较大时，超越了BN，能否被广泛使用，还需要时间的验证。
+
+#### NoduleNet: Decoupled False Positive Reduction for Pulmonary Nodule Detection and Segmentation
+
+本篇论文设计了一个3D端到端的结节检测和分割集成系统，包含了结节的检测，抑制及分割。主要的两点是：1）对于不同阶段的特征图做一个检测和抑制；2）对检测出来的包围球做分割细化来提升检测性能。训练是分阶段训练，而且loss函数是由NCS和soft dice组合而成，anchor的尺寸也是有{5, 10, 20, 30, 50}五种包围球，还有在检测到抑制的时候使用ROI pooling对maxpooling进行代替之类的细节优化，论文复现结果: 44epoch/100epoch左右就能到3/4的LIDC上达到froc:0.857，敏感性接近96%。总体效果不错，值得一试。
